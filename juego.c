@@ -75,7 +75,8 @@ int se_acabo_el_juego(t_mapa mapa, t_jugadores js) {
 		return FALSE;
 	}
 	else {
-		//MOSTRAR GANADOR
+		printf("JUGADOR/ES GANADOR/ES: ");
+
 		return TRUE;
 	}
 
@@ -149,6 +150,8 @@ main() {
 		realizar_jugada(&mapa, &js);
 
 		imprimir_estado_juego(mapa, js);
+
+		pasar_turno(&js);
 
 	}
 
