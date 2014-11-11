@@ -70,12 +70,30 @@ int jugar_maquina(t_mapa *mapa, int j) {
  * Devuelve cierto si el juego se ha acabado. Y sino, falso.
  */
 int se_acabo_el_juego(t_mapa mapa, t_jugadores js) {
+
+	int i, max = 0;
   
 	if (mapa.num_casillas_en_blanco != 0){
 		return FALSE;
 	}
 	else {
 		printf("JUGADOR/ES GANADOR/ES: ");
+
+		for (i = 0; i < js.num_jugadores; i++){
+
+			if (js.j[i].num_osos > max)
+				max = js.j[i].num_osos;
+
+		}
+
+		for (i = 0; i < js.num_jugadores; i++){
+
+			if (js.j[i].num_osos == max){
+				imprimir_jugador(i);
+				printf(" ");
+			}
+
+		}
 
 		return TRUE;
 	}
@@ -154,6 +172,8 @@ main() {
 		pasar_turno(&js);
 
 	}
+
+	printf("\n");
 
 }
 
