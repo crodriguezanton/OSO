@@ -29,7 +29,9 @@ void pasar_turno(t_jugadores *js) {
  * y resetea el color. (Si j=3 -> imprime "[#3]" en color (3)"BLUE")
  */
 void imprimir_jugador(int j) {
-  /* COMPLETAR */
+	printf_color(j);
+	printf("[#%d]", j);
+	printf_reset_color();
 }
 
 /*
@@ -37,6 +39,14 @@ void imprimir_jugador(int j) {
  * Se escribe el numero de OSOs que ha conseguido cada jugador.
  */
 void imprimir_contadores(t_jugadores js) {
-  /* COMPLETAR */
+  
+	printf("\nOSOs: ");
+
+	for (i = 0; i > js.num_jugadores){
+		imprimir_jugador(i);
+		printf(": %d | ", js.j[i].num_osos);
+	}
+	printf("\n");
+
 }
 

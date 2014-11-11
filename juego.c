@@ -89,16 +89,7 @@ void imprimir_estado_juego(t_mapa mapa, t_jugadores js) {
 	int i;
 
 	imprimir_mapa(mapa);
-
-	printf("\nOSOs: ");
-
-	for (i = 0; i > js.num_jugadores){
-		printf_color(i);
-		printf("[#%d]", i);
-		printf_reset_color();
-		printf(": %d | ", js.j[i].num_osos);
-	}
-	printf("\n");
+	imprimir_contadores(js);
 
 }
 
@@ -111,14 +102,12 @@ void imprimir_estado_juego(t_mapa mapa, t_jugadores js) {
  */
 void realizar_jugada(t_mapa *mapa, t_jugadores *js) {
 
-	int j js->turno, carryon = TRUE;
+	int j = js->turno, carryon = TRUE;
 	int f, c;
 	char car;
 
 	printf("Jugador ");
-	printf_color(j);
-	printf("[#%d]");
-	printf_reset_color();
+	imprimir_jugador(j);
 
 	if (js->j[j].tipo == JUGADOR_HUMANO){
 
