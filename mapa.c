@@ -42,7 +42,7 @@ void inicializar_mapa(t_mapa *mapa) {
 		printf("Mapa:\n\tFilas (%d-%d): ", MIN_FILAS, MAX_FILAS);
 		scanf("%d", &mapa->num_filas);
 		if (!(mapa->num_filas >= MIN_FILAS && mapa->num_filas <= MAX_FILAS)){
-			printf("Error: Numero de filas tiene que estar entre %d y %d", MIN_FILAS, MAX_FILAS);
+			printf("Error: Numero de filas tiene que estar entre %d y %d\n", MIN_FILAS, MAX_FILAS);
 			error = TRUE;
 		}
 		else{
@@ -56,7 +56,7 @@ void inicializar_mapa(t_mapa *mapa) {
 		printf("\tColumnas (%d-%d): ", MIN_COLS, MAX_COLS);
 		scanf("%d", &mapa->num_cols);
 		if (!(mapa->num_filas >= MIN_FILAS && mapa->num_filas <= MAX_FILAS)){
-			printf("Error: Numero de columnas tiene que estar entre %d y %d", MIN_COLS, MAX_COLS);
+			printf("Error: Numero de columnas tiene que estar entre %d y %d\n", MIN_COLS, MAX_COLS);
 			error = TRUE;
 		}
 		else{
