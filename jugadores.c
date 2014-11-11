@@ -20,7 +20,14 @@ void inicializar_jugadores(t_jugadores *js) {
  * Dado un puntero a jugadores pasa el turno al siguiente jugador
  */
 void pasar_turno(t_jugadores *js) {
-  /* COMPLETAR */
+  
+	if (js->turno < js->num_jugadores){
+		js->turno++;
+	}
+	else {
+		js->turno = 0;
+	}
+
 }
 
 /*
