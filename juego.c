@@ -55,7 +55,7 @@ int jugar_humano(t_mapa *mapa, int j) {
  */
 int jugar_maquina(t_mapa *mapa, int j) {
   
-	//INTELIGENCIA
+	//TODO: INTELIGENCIA
 
 	escribir_jugada(&mapa, j, f, c, car);
 	duerme_un_rato();
