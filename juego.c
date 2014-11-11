@@ -11,7 +11,39 @@
  * Devuelve el numero de OSOs conseguidos con esa jugada.
  */
 int jugar_humano(t_mapa *mapa, int j) {
-  /* COMPLETAR */
+	
+	int j, carryon = TRUE;
+	int f, c;
+	char car;
+
+		while (carryon){
+
+			printf(" Fila,Columna: ");
+			scanf("%d, %d", &f, &c);
+
+			if (mapa->c[f][c].letra == CASILLA_VACIA){
+				carryon = FALSE;
+			}
+
+		}
+
+		carryon = TRUE;
+		while (carryon){
+
+			printf("O/S: ");
+			scanf("%c", &car);
+
+			if (car == 'S' || car == 's' car == 'O' car == 'o'){
+				carryon = FALSE;
+			}
+
+		}
+
+
+
+		escribir_jugada(&mapa, j, f, c, car);
+		return contar_osos();
+
 }
 
 /*
@@ -22,7 +54,13 @@ int jugar_humano(t_mapa *mapa, int j) {
  * Devuelve el numero de OSOs conseguidos con esa jugada.
  */
 int jugar_maquina(t_mapa *mapa, int j) {
-  /* COMPLETAR */
+  
+	//INTELIGENCIA
+
+	escribir_jugada(&mapa, j, f, c, car);
+	duerme_un_rato();
+	return contar_osos();
+
 }
 
 /*
@@ -32,14 +70,36 @@ int jugar_maquina(t_mapa *mapa, int j) {
  * Devuelve cierto si el juego se ha acabado. Y sino, falso.
  */
 int se_acabo_el_juego(t_mapa mapa, t_jugadores js) {
-  /* COMPLETAR */
+  
+	if (mapa.num_casillas_en_blanco != 0){
+		return FALSE;
+	}
+	else {
+		//MOSTRAR GANADOR
+		return TRUE;
+	}
+
 }
 
 /*
  * Imprime el mapa y los contadores de OSOs de cada jugador.
  */
 void imprimir_estado_juego(t_mapa mapa, t_jugadores js) {
-  /* COMPLETAR */
+  
+	int i;
+
+	imprimir_mapa(mapa);
+
+	printf("\nOSOs: ");
+
+	for (i = 0; i > js.num_jugadores){
+		printf_color(i);
+		printf("[#%d]", i);
+		printf_reset_color();
+		printf(": %d | ", js.j[i].num_osos);
+	}
+	printf("\n");
+
 }
 
 /*
@@ -50,7 +110,27 @@ void imprimir_estado_juego(t_mapa mapa, t_jugadores js) {
  * - Si no obtuvo ninguno pasa el turno.
  */
 void realizar_jugada(t_mapa *mapa, t_jugadores *js) {
-  /* COMPLETAR */
+
+	int j js->turno, carryon = TRUE;
+	int f, c;
+	char car;
+
+	printf("Jugador ");
+	printf_color(j);
+	printf("[#%d]");
+	printf_reset_color();
+
+	if (js->j[j].tipo == JUGADOR_HUMANO){
+
+		jugar_humano(&mapa, j);
+
+	}
+	else {
+
+		jugar_maquina(&mapa, j);
+
+	}
+
 }
 
 /*
@@ -63,6 +143,25 @@ void realizar_jugada(t_mapa *mapa, t_jugadores *js) {
  */
 
 main() {
-  /* COMPLETAR */
+  
+	t_jugadores js;
+	t_mapa mapa;
+
+	inicializar_azar();
+
+	inicializar_jugadores(&js);
+
+	inicializar_mapa(&mapa);
+
+	imprimir_estado_juego(mapa, js);
+
+	while (!se_acabo_el_juego(mapa, js)){
+
+		realizar_jugada(&mapa, &js);
+
+		imprimir_estado_juego(mapa, js);
+
+	}
+
 }
 
