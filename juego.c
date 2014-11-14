@@ -33,7 +33,7 @@ int jugar_humano(t_mapa *mapa, int j) {
 			printf("O/S: ");
 			scanf("%c", &car);
 
-			if (car == 'S' || car == 's' car == 'O' car == 'o'){
+			if (car == 'S' || car == 's' || car == 'O' || car == 'o'){
 				carryon = FALSE;
 			}
 
