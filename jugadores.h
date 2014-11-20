@@ -9,6 +9,9 @@
 #define JUGADOR_MAQUINA	0
 #define JUGADOR_HUMANO	1
 
+#define TRUE 1
+#define FALSE 0
+
 typedef struct {
 	int	num_osos;
 	int	tipo;	// JUGADOR_MAQUINA o JUGADOR_HUMANO

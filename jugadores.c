@@ -70,10 +70,12 @@ void inicializar_jugadores(t_jugadores *js) {
 	 * Se escribe el numero de OSOs que ha conseguido cada jugador.
 	 */
 	void imprimir_contadores(t_jugadores js) {
+
+		int i;
 	  
 		printf("\nOSOs: ");
 	
-		for (i = 0; i > js.num_jugadores){
+		for (i = 0; i > js.num_jugadores; i++){
 			imprimir_jugador(i);
 			printf(": %d | ", js.j[i].num_osos);
 		}

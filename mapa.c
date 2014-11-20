@@ -64,7 +64,7 @@ void inicializar_mapa(t_mapa *mapa) {
 		}
 	}
 
-	inicializar_casillas(&mapa);
+	inicializar_casillas(mapa);
 
 }
 
@@ -74,8 +74,38 @@ void inicializar_mapa(t_mapa *mapa) {
  * se imprimen con el color del jugador que las hizo.
  */
 void imprimir_mapa(t_mapa mapa) {
-  
 
+	int c, f;
+  
+	printf("  |");
+	for (c = 0; c < mapa.num_cols; c++){
+
+		printf("%d|", c / 10);
+
+	}
+	printf("\n  |");
+	for (c = 0; c < mapa.num_cols; c++){
+
+		printf("%d|", c % 10);
+
+	}
+	printf("\n");
+	for (f = 0; f < mapa.num_filas; f++){
+
+		printf("%02d|", f);
+		
+		for (c = 0; c < mapa.num_cols; c++){
+
+			printf_color(mapa.c[f][c].jugador);
+			printf("%c", mapa.c[f][c].letra);
+			printf_reset_color();
+			printf("|");
+
+		}
+
+		printf("\n");
+
+	}
 
 }
 
@@ -96,7 +126,75 @@ void escribir_jugada(t_mapa *mapa, int j, int f, int c, char car) {
  * devuelve cuantos OSOs se crearian al escribir el car en fila,columna.
  */
 int calcular_osos(t_mapa *mapa, int f, int c, char car){
-  /* COMPLETAR */
+  
+	int osos[4][2] = { { -1, 0 }, { -1, -1 }, { 0, -1 }, { 1, -1 } }; // OSOS: - \ | /  = combinacions possibles
+	int i, f1, c1, f2, c2, count = 0;
+
+	if (car == 'S'){
+
+		for (i = 0; i < 4; i++){
+
+			f1 = f + osos[i][0];
+			c1 = c + osos[i][1];
+			f2 = f - osos[i][0];
+			c2 = c - osos[i][1];
+
+			if (f1 >= 0 && f1 < mapa->num_filas && c1 >= 0 && c1 < mapa->num_cols && f2 >= 0 && f2 < mapa->num_filas && c2 >= 0 && c2 < mapa->num_cols){
+
+				if (mapa->c[f1][c1].letra == 'O' && mapa->c[f2][c2].letra == 'O'){
+
+					count++;
+
+				}
+
+			}
+
+		}
+
+	}
+	else {
+
+		for (i = 0; i < 4; i++){
+
+			f1 = f + osos[i][0];
+			c1 = c + osos[i][1];
+			f2 = f + 2 * osos[i][0];
+			c2 = c + 2 * osos[i][1];
+
+			if (f1 >= 0 && f1 < mapa->num_filas && c1 >= 0 && c1 < mapa->num_cols && f2 >= 0 && f2 < mapa->num_filas && c2 >= 0 && c2 < mapa->num_cols){
+
+				if (mapa->c[f1][c1].letra == 'S' && mapa->c[f2][c2].letra == 'O'){
+
+					count++;
+
+				}
+
+			}
+
+		}
+
+		for (i = 0; i < 4; i++){
+
+			f1 = f - osos[i][0];
+			c1 = c - osos[i][1];
+			f2 = f - 2 * osos[i][0];
+			c2 = c - 2 * osos[i][1];
+
+			if (f1 >= 0 && f1 < mapa->num_filas && c1 >= 0 && c1 < mapa->num_cols && f2 >= 0 && f2 < mapa->num_filas && c2 >= 0 && c2 < mapa->num_cols){
+
+				if (mapa->c[f1][c1].letra == 'S' && mapa->c[f2][c2].letra == 'O'){
+
+					count++;
+
+				}
+
+			}
+
+		}
+
+	}
+
+	return count;
   
 }
 

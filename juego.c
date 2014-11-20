@@ -10,9 +10,9 @@
  * verifica fila,col,car y realiza la jugada.
  * Devuelve el numero de OSOs conseguidos con esa jugada.
  */
-int jugar_humano(t_mapa *mapa, int j) {
+int jugar_humano(t_mapa *mapa, int jug) {
 	
-	int j, carryon = TRUE;
+	int carryon = TRUE;
 	int f, c;
 	char car;
 
@@ -41,8 +41,8 @@ int jugar_humano(t_mapa *mapa, int j) {
 
 
 
-		escribir_jugada(&mapa, j, f, c, car);
-		return contar_osos();
+		escribir_jugada(mapa, jug, f, c, car);
+		return contar_osos(mapa, f, c, car);
 
 }
 
@@ -54,12 +54,67 @@ int jugar_humano(t_mapa *mapa, int j) {
  * Devuelve el numero de OSOs conseguidos con esa jugada.
  */
 int jugar_maquina(t_mapa *mapa, int j) {
-  
-	//TODO: INTELIGENCIA
 
-	escribir_jugada(&mapa, j, f, c, car);
+	int f = 0, c = 0, nf, nc, po, pomax = 0;
+	char car = 'O', pocar, pomaxcar;
+
+	for (nf = 0; nf < mapa->num_filas; nf++){
+
+		for (nc = 0; nc < mapa->num_cols; nc++){
+
+			if (mapa->c[nf][nc].jugador == CASILLA_VACIA){
+
+				pocar = 'O';
+
+				po = contar_osos(mapa, nf, nc, pocar);
+
+				if (po == pomax){
+					if (numero_al_azar(2) > 1.5){
+
+						pomaxcar = pocar;
+						f = nf;
+						c = nc;
+
+					}
+				}
+				else if (po > pomax){
+
+					pomaxcar = pocar;
+					f = nf;
+					c = nc;
+
+				}
+
+				pocar = 'S';
+
+				po = contar_osos(mapa, nf, nc, pocar);
+
+				if (po == pomax){
+					if (numero_al_azar(2) > 1.5){
+
+						pomaxcar = pocar;
+						f = nf;
+						c = nc;
+
+					}
+				}
+				else if (po > pomax){
+
+					pomaxcar = pocar;
+					f = nf;
+					c = nc;
+
+				}
+
+			}
+
+		}
+
+	}
+
+	escribir_jugada(mapa, j, f, c, pomaxcar);
 	duerme_un_rato();
-	return contar_osos();
+	return contar_osos(mapa, f, c, pomaxcar);
 
 }
 
@@ -104,8 +159,6 @@ int se_acabo_el_juego(t_mapa mapa, t_jugadores js) {
  * Imprime el mapa y los contadores de OSOs de cada jugador.
  */
 void imprimir_estado_juego(t_mapa mapa, t_jugadores js) {
-  
-	int i;
 
 	imprimir_mapa(mapa);
 	imprimir_contadores(js);
@@ -121,22 +174,28 @@ void imprimir_estado_juego(t_mapa mapa, t_jugadores js) {
  */
 void realizar_jugada(t_mapa *mapa, t_jugadores *js) {
 
-	int j = js->turno, carryon = TRUE;
-	int f, c;
-	char car;
+	int j = js->turno, carryon = TRUE, osos;
 
 	printf("Jugador ");
 	imprimir_jugador(j);
 
 	if (js->j[j].tipo == JUGADOR_HUMANO){
 
-		jugar_humano(&mapa, j);
+		osos = jugar_humano(mapa, j);
+		
 
 	}
 	else {
 
-		jugar_maquina(&mapa, j);
+		osos = jugar_maquina(mapa, j);
 
+	}
+
+	if (osos == 0){
+		pasar_turno(js);
+	}
+	else {
+		js->j[j].num_osos += osos;
 	}
 
 }
@@ -168,8 +227,6 @@ main() {
 		realizar_jugada(&mapa, &js);
 
 		imprimir_estado_juego(mapa, js);
-
-		pasar_turno(&js);
 
 	}
 
