@@ -10,7 +10,7 @@
  * E inicializa el turno al primer jugador.
  */
 void inicializar_jugadores(t_jugadores *js) {
-	int error = TRUE;
+	int error = TRUE, i;
 	
 	while (error){
 		printf("Numero de jugadores (%d-%d): ",  MIN_JUGADORES, MAX_JUGADORES);
@@ -25,13 +25,25 @@ void inicializar_jugadores(t_jugadores *js) {
 	}
 	error = TRUE;
 	while (error){
-		printf("Numero de jugadores humanos (0-2): ");
+		printf("Numero de jugadores humanos (%d-%d): ", MIN_HUMANOS, js->num_jugadores);
 		scanf("%d", &js->num_humanos);
 		
 		if (!( js->num_humanos >= MIN_HUMANOS &&  js->num_humanos <= js->num_jugadores)){
 			printf("Error: Numero de jugadores humanos tiene que estar entre %d y %d\n", MIN_HUMANOS, js->num_jugadores);
+
+			
+
 			error = TRUE;
 		} else {
+			for(i = 0; i < js->num_jugadores; i++){
+				if(i < js->num_humanos){
+					js->j[i].tipo = JUGADOR_HUMANO;
+					js->j[i].num_osos = 0;
+				} else {
+					js->j[i].tipo = JUGADOR_MAQUINA;
+					js->j[i].num_osos = 0;
+				}
+			}			
 			error = FALSE;
 		}
 		
@@ -45,7 +57,7 @@ void inicializar_jugadores(t_jugadores *js) {
 	 */
 	void pasar_turno(t_jugadores *js) {
 	  
-		if (js->turno < js->num_jugadores){
+		if (js->turno < js->num_jugadores - 1){
 			js->turno++;
 		}
 		else {
@@ -75,7 +87,7 @@ void inicializar_jugadores(t_jugadores *js) {
 	  
 		printf("\nOSOs: ");
 	
-		for (i = 0; i > js.num_jugadores; i++){
+		for (i = 0; i < js.num_jugadores; i++){
 			imprimir_jugador(i);
 			printf(": %d | ", js.j[i].num_osos);
 		}

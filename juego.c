@@ -25,8 +25,10 @@ int jugar_humano(t_mapa *mapa, int jug) {
 				carryon = FALSE;
 			}
 
-		}
+			scanf("%*c");
 
+		}
+		
 		carryon = TRUE;
 		while (carryon){
 
@@ -42,7 +44,7 @@ int jugar_humano(t_mapa *mapa, int jug) {
 
 
 		escribir_jugada(mapa, jug, f, c, car);
-		return contar_osos(mapa, f, c, car);
+		return calcular_osos(mapa, f, c, car);
 
 }
 
@@ -55,21 +57,23 @@ int jugar_humano(t_mapa *mapa, int jug) {
  */
 int jugar_maquina(t_mapa *mapa, int j) {
 
-	int f = 0, c = 0, nf, nc, po, pomax = 0;
-	char car = 'O', pocar, pomaxcar;
+	int f = 0, c = 0, nf, nc, po, pomax = 0, goon = TRUE, n = 0, rand;
+	char car = 'O', pocar, pomaxcar = 'O';
+
+
 
 	for (nf = 0; nf < mapa->num_filas; nf++){
 
 		for (nc = 0; nc < mapa->num_cols; nc++){
 
-			if (mapa->c[nf][nc].jugador == CASILLA_VACIA){
+			if (mapa->c[nf][nc].letra == CASILLA_VACIA){
 
 				pocar = 'O';
 
 				po = calcular_osos(mapa, nf, nc, pocar);
 
 				if (po == pomax){
-					if (numero_al_azar(2) > 1.5){
+					if (numero_al_azar(100) > 50){
 
 						pomaxcar = pocar;
 						f = nf;
@@ -90,7 +94,7 @@ int jugar_maquina(t_mapa *mapa, int j) {
 				po = calcular_osos(mapa, nf, nc, pocar);
 
 				if (po == pomax){
-					if (numero_al_azar(2) > 1.5){
+					if (numero_al_azar(100) > 50){
 
 						pomaxcar = pocar;
 						f = nf;
@@ -110,6 +114,36 @@ int jugar_maquina(t_mapa *mapa, int j) {
 
 		}
 
+	}
+
+	if(pomax == 0){
+
+		rand = numero_al_azar(mapa->num_casillas_en_blanco) - 1;
+
+		for(nf = 0; nf < mapa->num_filas && n <= rand; nf++){
+			for(nc = 0; nc < mapa->num_cols; nc++){
+
+				if(mapa->c[nf][nc].letra == CASILLA_VACIA){
+					
+					if(n == rand){
+						f = nf;
+						c = nc;
+						if (numero_al_azar(100) > 50){
+							pomaxcar = 'S';
+						} else {
+							pomaxcar = 'O';
+						}
+					}
+
+					n++;
+
+				}
+				
+			}
+
+		}		
+
+		
 	}
 
 	escribir_jugada(mapa, j, f, c, pomaxcar);
@@ -162,6 +196,7 @@ void imprimir_estado_juego(t_mapa mapa, t_jugadores js) {
 
 	imprimir_mapa(mapa);
 	imprimir_contadores(js);
+	printf("\n");
 
 }
 
@@ -178,6 +213,7 @@ void realizar_jugada(t_mapa *mapa, t_jugadores *js) {
 
 	printf("Jugador ");
 	imprimir_jugador(j);
+	printf("\n");
 
 	if (js->j[j].tipo == JUGADOR_HUMANO){
 
@@ -223,6 +259,8 @@ main() {
 	imprimir_estado_juego(mapa, js);
 
 	while (!se_acabo_el_juego(mapa, js)){
+
+			
 
 		realizar_jugada(&mapa, &js);
 
