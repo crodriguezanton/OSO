@@ -66,7 +66,7 @@ int jugar_maquina(t_mapa *mapa, int j) {
 
 				pocar = 'O';
 
-				po = contar_osos(mapa, nf, nc, pocar);
+				po = calcular_osos(mapa, nf, nc, pocar);
 
 				if (po == pomax){
 					if (numero_al_azar(2) > 1.5){
@@ -87,7 +87,7 @@ int jugar_maquina(t_mapa *mapa, int j) {
 
 				pocar = 'S';
 
-				po = contar_osos(mapa, nf, nc, pocar);
+				po = calcular_osos(mapa, nf, nc, pocar);
 
 				if (po == pomax){
 					if (numero_al_azar(2) > 1.5){
@@ -114,7 +114,7 @@ int jugar_maquina(t_mapa *mapa, int j) {
 
 	escribir_jugada(mapa, j, f, c, pomaxcar);
 	duerme_un_rato();
-	return contar_osos(mapa, f, c, pomaxcar);
+	return calcular_osos(mapa, f, c, pomaxcar);
 
 }
 
