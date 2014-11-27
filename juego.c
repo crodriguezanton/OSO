@@ -83,6 +83,7 @@ int jugar_maquina(t_mapa *mapa, int j) {
 				}
 				else if (po > pomax){
 
+					pomax = po;
 					pomaxcar = pocar;
 					f = nf;
 					c = nc;
@@ -104,6 +105,7 @@ int jugar_maquina(t_mapa *mapa, int j) {
 				}
 				else if (po > pomax){
 
+					pomax = po;
 					pomaxcar = pocar;
 					f = nf;
 					c = nc;
