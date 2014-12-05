@@ -85,7 +85,7 @@ void inicializar_jugadores(t_jugadores *js) {
 
 		int i;
 	  
-		printf("\nOSOs: ");
+		printf("\nOSOs:  ");
 	
 		for (i = 0; i < js.num_jugadores; i++){
 			imprimir_jugador(i);
