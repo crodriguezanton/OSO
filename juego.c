@@ -202,7 +202,6 @@ void imprimir_estado_juego(t_mapa mapa, t_jugadores js) {
 
 	imprimir_mapa(mapa);
 	imprimir_contadores(js);
-	printf("\n");
 
 }
 
