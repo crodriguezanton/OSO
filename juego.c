@@ -219,12 +219,11 @@ void realizar_jugada(t_mapa *mapa, t_jugadores *js) {
 
 	printf("Jugador ");
 	imprimir_jugador(j);
-	printf("\n");
+	
 
 	if (js->j[j].tipo == JUGADOR_HUMANO){
 
 		osos = jugar_humano(mapa, j);
-		
 
 	}
 	else {
@@ -232,6 +231,8 @@ void realizar_jugada(t_mapa *mapa, t_jugadores *js) {
 		osos = jugar_maquina(mapa, j);
 
 	}
+	
+	printf(" %d osos\n\n", osos);
 
 	if (osos == 0){
 		pasar_turno(js);
